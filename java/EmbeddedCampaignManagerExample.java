@@ -8,9 +8,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EmbeddedCampaignManagerExample {
   private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
+  private static final String RMP_PORTAL_BASE_URL = "https://portal.rmp.moloco.cloud";
 
   public static void main(String[] args) {
-    String baseUrl = "https://portal.rmp.moloco.cloud";
+    String baseUrl = RMP_PORTAL_BASE_URL;
     String platformId = "RMP_PLATFORM_ID";
     String adAccountId = "ad-account-id";
     String adAccountTitle = "My Ad Account";
