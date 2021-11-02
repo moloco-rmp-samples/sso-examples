@@ -1,5 +1,4 @@
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
@@ -9,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EmbeddedCampaignManagerExample {
   private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
+  private static final String UTF_8_CHARSET = "UTF-8";
   private static final String RMP_PORTAL_BASE_URL = "https://portal.rmp.moloco.cloud";
 
   public static void main(String[] args) {
@@ -36,6 +36,10 @@ public class EmbeddedCampaignManagerExample {
     }
   }
 
+  public static String buildQueryParam(String name, String value) throws Exception {
+    return name + "=" + URLEncoder.encode(value, UTF_8_CHARSET);
+  };
+
   public static String createSignedRmpPortalUrl(String baseUrl, String path, String platformId, String adAccountId,
       String adAccountTitle, String name, String email, String role, String externalUserId, String secret,
       String version, String colorMode, String language) throws Exception {
@@ -54,30 +58,23 @@ public class EmbeddedCampaignManagerExample {
     String paramString = String.join("\n", Arrays.asList(paramArray));
 
     // create signature
-    String utf8Charset = StandardCharsets.UTF_8.toString();
     byte[] keyBytes = secret.getBytes();
     SecretKeySpec signingKey = new SecretKeySpec(keyBytes, HMAC_SHA256_ALGORITHM);
     Mac mac = Mac.getInstance(HMAC_SHA256_ALGORITHM);
     mac.init(signingKey);
-    byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(paramString.getBytes(utf8Charset)));
-    String signature = new String(rawHmac, utf8Charset);
+    byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(paramString.getBytes(UTF_8_CHARSET)));
+    String signature = new String(rawHmac, UTF_8_CHARSET);
 
     // construct final url
-    String signedUrl = baseUrl + "/sso?";
-    signedUrl += "ad_account_id=" + URLEncoder.encode(adAccountId, utf8Charset);
-    signedUrl += "&ad_account_title=" + URLEncoder.encode(adAccountTitle, utf8Charset);
-    signedUrl += "&email=" + URLEncoder.encode(email, utf8Charset);
-    signedUrl += "&external_user_id=" + URLEncoder.encode(externalUserId, utf8Charset);
-    signedUrl += "&name=" + URLEncoder.encode(name, utf8Charset);
-    signedUrl += "&nonce=" + URLEncoder.encode(nonce, utf8Charset);
-    signedUrl += "&path=" + URLEncoder.encode(path, utf8Charset);
-    signedUrl += "&platform_id=" + URLEncoder.encode(platformId, utf8Charset);
-    signedUrl += "&role=" + URLEncoder.encode(role, utf8Charset);
-    signedUrl += "&timestamp=" + URLEncoder.encode(timestamp, utf8Charset);
-    signedUrl += "&version=" + URLEncoder.encode(version, utf8Charset);
-    signedUrl += "&signature=" + URLEncoder.encode(signature, utf8Charset);
-    signedUrl += "&config:colorModePreference=" + URLEncoder.encode(colorMode, utf8Charset);
-    signedUrl += "&config:language=" + URLEncoder.encode(language, utf8Charset);
+    String[] queryParams = new String[] { buildQueryParam("ad_account_id", adAccountId),
+        buildQueryParam("ad_account_title", adAccountTitle), buildQueryParam("email", email),
+        buildQueryParam("external_user_id", externalUserId), buildQueryParam("name", name),
+        buildQueryParam("nonce", nonce), buildQueryParam("path", path), buildQueryParam("platform_id", platformId),
+        buildQueryParam("role", role), buildQueryParam("timestamp", timestamp), buildQueryParam("version", version),
+        buildQueryParam("signature", signature), buildQueryParam("config:colorModePreference", colorMode),
+        buildQueryParam("config:language", language) };
+
+    String signedUrl = baseUrl + "/sso?" + String.join("&", Arrays.asList(queryParams));
 
     return signedUrl;
   }
