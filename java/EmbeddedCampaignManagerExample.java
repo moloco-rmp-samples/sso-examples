@@ -1,6 +1,7 @@
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.Mac;
@@ -48,18 +49,9 @@ public class EmbeddedCampaignManagerExample {
     String nonce = Base64.getEncoder().encodeToString(bytes);
 
     // gather params in an alphabetical order
-    String params = "";
-    params += adAccountId + "\n";
-    params += adAccountTitle + "\n";
-    params += email + "\n";
-    params += externalUserId + "\n";
-    params += name + "\n";
-    params += nonce + "\n";
-    params += path + "\n";
-    params += platformId + "\n";
-    params += role + "\n";
-    params += timestamp + "\n";
-    params += version;
+    String[] paramArray = new String[] { adAccountId, adAccountTitle, email, externalUserId, name, nonce, path,
+        platformId, role, timestamp, version };
+    String paramString = String.join("\n", Arrays.asList(paramArray));
 
     // create signature
     String utf8Charset = StandardCharsets.UTF_8.toString();
@@ -67,7 +59,7 @@ public class EmbeddedCampaignManagerExample {
     SecretKeySpec signingKey = new SecretKeySpec(keyBytes, HMAC_SHA256_ALGORITHM);
     Mac mac = Mac.getInstance(HMAC_SHA256_ALGORITHM);
     mac.init(signingKey);
-    byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(params.getBytes(utf8Charset)));
+    byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(paramString.getBytes(utf8Charset)));
     String signature = new String(rawHmac, utf8Charset);
 
     // construct final url
