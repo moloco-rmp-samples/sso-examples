@@ -71,7 +71,7 @@ public class EmbeddedCampaignManagerExample {
         buildQueryParam("external_user_id", externalUserId), buildQueryParam("name", name),
         buildQueryParam("nonce", nonce), buildQueryParam("path", path), buildQueryParam("platform_id", platformId),
         buildQueryParam("role", role), buildQueryParam("timestamp", timestamp), buildQueryParam("version", version),
-        buildQueryParam("signature", signature), buildQueryParam("config:colorModePreference", colorMode),
+        buildQueryParam("signature", signature), buildQueryParam("config:color_mode", colorMode),
         buildQueryParam("config:language", language) };
 
     String signedUrl = baseUrl + "/sso?" + String.join("&", Arrays.asList(queryParams));
