@@ -1,1 +1,1 @@
-Examples for signing SSO URL to use embeded campaign manager
+Examples for signing SSO URL to use embedded campaign manager
