@@ -54,10 +54,12 @@ def create_signed_rmp_portal_url(args)
   base_url + '/sso?' + query_string
 end
 
+ad_account_id = 'my_ad_account_id'
+
 args = {
   base_url: 'https://portal.rmp.moloco.cloud',
-  ad_account_id: 'ad-account-id',
-  path: '/embed/sponsored-ads/cm/a/ad-account-id',
+  ad_account_id: ad_account_id,
+  path: '/embed/sponsored-ads/cm/a/' + ad_account_id,
   platform_id: 'RMP_PLATFORM_ID',
   ad_account_title: 'My Ad Account',
   name: 'Example User Name',
