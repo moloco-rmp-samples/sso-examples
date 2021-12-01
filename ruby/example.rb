@@ -46,7 +46,7 @@ def create_signed_rmp_portal_url(args)
     version: version,
     signature: signature,
     'config:color_mode': color_mode,
-    language: language
+    'config:language': language
   }
 
   query_string = URI.encode_www_form(query_params)
@@ -72,4 +72,4 @@ args = {
 
 signed_url = create_signed_rmp_portal_url(args)
 
-print(signed_url)
+puts(signed_url)
