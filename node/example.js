@@ -78,7 +78,7 @@ const generateNonce = (length) => {
     .join("");
 };
 
-const baseUrl = "https://portal.rmp.moloco.cloud";
+const baseUrl = "https://main.rmp-portal.moloco.com";
 const adAccountId = "ad-account-id";
 const adAccountTitle = "My Ad Account";
 const email = "test@example.com";
