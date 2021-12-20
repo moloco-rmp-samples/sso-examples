@@ -81,26 +81,43 @@ func (p *SSOParams) createSignedRmpPortalURL() string {
 	queryParams.Add("timestamp", timestamp)
 	queryParams.Add("version", p.Version)
 	queryParams.Add("signature", signature)
+	queryParams.Add("config:color_mode", p.ColorMode)
+	queryParams.Add("config:language", p.Language)
 
 	return p.BaseURL + "/sso?" + queryParams.Encode()
 }
 
 func main() {
+	const (
+		baseURL        = "https://main.rmp-portal.moloco.com"
+		adAccountID    = "my-ad-account-id"
+		adAccountTitle = "My Ad Account"
+		email          = "test@example.com"
+		externalUserID = "user-id"
+		name           = "Example User Name"
+		path           = "/embed/sponsored-ads/cm/a/" + adAccountID
+		platformID     = "RMP_PLATFORM_ID"
+		role           = "AD_ACCOUNT_OWNER"
+		secret         = "super-secret"
+		colorMode      = "light" // light or dark
+		language       = "en"    // en or ko
+		version        = "1.0.0"
+	)
 
 	params := &SSOParams{
-		BaseURL:        "https://main.rmp-portal.moloco.com",
-		AdAccountID:    "ad-account-id",
-		AdAccountTitle: "My Ad Account",
-		Email:          "test@example.com",
-		ExternalUserID: "user-id",
-		Name:           "Example User Name",
-		Path:           "/embed/sponsored-ads/cm/a/",
-		PlatformID:     "RMP_PLATFORM_ID",
-		Role:           "AD_ACCOUNT_OWNER",
-		Secret:         "super-secret",
-		ColorMode:      "light",
-		Language:       "en",
-		Version:        "1.0.0",
+		BaseURL:        baseURL,
+		AdAccountID:    adAccountID,
+		AdAccountTitle: adAccountTitle,
+		Email:          email,
+		ExternalUserID: externalUserID,
+		Name:           name,
+		Path:           path,
+		PlatformID:     platformID,
+		Role:           role,
+		Secret:         secret,
+		ColorMode:      colorMode,
+		Language:       language,
+		Version:        version,
 	}
 
 	signedURL := params.createSignedRmpPortalURL()
