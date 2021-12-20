@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// Using 16 characters long random nonce would be sufficient in most use cases
 func generateNonce(length int) string {
 	const possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
