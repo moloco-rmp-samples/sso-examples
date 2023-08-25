@@ -90,7 +90,7 @@ func (p *SSOParams) createSignedRmpPortalURL() string {
 
 func main() {
 	const (
-		baseURL        = "https://main.rmp-portal.moloco.com"
+		baseURL        = "https://{YOUR-RMP-PORTAL_URL}" // Please use the url provided by your account manager
 		adAccountID    = "my-ad-account-id"
 		adAccountTitle = "My Ad Account"
 		email          = "test@example.com"
