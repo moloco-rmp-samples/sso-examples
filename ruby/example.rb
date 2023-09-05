@@ -57,7 +57,7 @@ end
 ad_account_id = 'my_ad_account_id'
 
 args = {
-  base_url: 'https://portal.rmp.moloco.cloud',
+  base_url: 'https://{YOUR-RMP-PORTAL_URL}', # Please use the url provided by your account manager
   ad_account_id: ad_account_id,
   path: '/embed/sponsored-ads/cm/a/' + ad_account_id,
   platform_id: 'RMP_PLATFORM_ID',
